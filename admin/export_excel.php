@@ -11,7 +11,6 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Actualizar el encabezado con los nuevos campos
 $header = [
     ['Nro', 'Instituto', 'Código AMITAI', 'Nro de boleta de pago AMITAI', 'Monto AMITAI (Bs)', 'Fecha de Pago AMITAI', 
     'Nro de boleta del pago para el prospecto', 'Monto Prospecto (Bs)', 'Fecha de Pago Prospecto', 
@@ -72,12 +71,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $contador++,
         $row['instituto'],
         $row['cod_amitai'],
-        $row['pago_amitai'], // Nro de boleta de pago AMITAI
-        $row['monto_amitai'], // Monto AMITAI (Bs)
-        $row['fecha_amitai'], // Fecha de Pago AMITAI
-        $row['pago_prospecto'], // Nro de boleta del pago para el prospecto
-        $row['monto_prospecto'], // Monto Prospecto (Bs)
-        $row['fecha_prospecto'], // Fecha de Pago Prospecto
+        $row['pago_amitai'],
+        $row['monto_amitai'],
+        $row['fecha_amitai'],
+        $row['pago_prospecto'], 
+        $row['monto_prospecto'], 
+        $row['fecha_prospecto'], 
         $row['ci'],
         $row['apellido_paterno'],
         $row['apellido_materno'],
@@ -86,7 +85,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $row['complementarios'],
         $row['fecha_nacimiento'],
         $row['procedencia'],
-        $row['direccion'], // Residencia
+        $row['direccion'],
         $row['correo'],
         $row['telefono_fijo'],
         $row['numero_celular'],
@@ -94,7 +93,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $row['nombre_tutor'],
         $row['cuenta_con_seguro'],
         $row['de_donde_es_seguro'],
-        $row['semana_presentacion'] // Añadir Semana de Presentación
+        $row['semana_presentacion'] 
     ];
 }
 
