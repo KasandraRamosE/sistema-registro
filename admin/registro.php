@@ -29,8 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contacto_tutor = sanitizeInput($_POST['contacto_tutor']);
     $nombre_tutor = sanitizeInput($_POST['nombre_tutor']);
     $cuenta_con_seguro = sanitizeInput($_POST['cuenta_con_seguro']);
-
-    // Si no cuenta con seguro, no guardar el dato en "de_donde_es_seguro"
     $de_donde_es_seguro = ($cuenta_con_seguro == 'Si') ? sanitizeInput($_POST['de_donde_es_seguro']) : null;
     
     $cod_amitai = sanitizeInput($_POST['cod_amitai']);
@@ -44,19 +42,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $ciudad_registro = $_SESSION['departamento'];
     $semana_presentacion = $instituto == 'COLMILAV' ? sanitizeInput($_POST['semana_presentacion']) : null;
 
-    // Validación del campo "¿De dónde es el Seguro?" si "¿Cuenta con Seguro?" es "Sí"
     if ($cuenta_con_seguro == 'Si' && empty($de_donde_es_seguro)) {
         echo 'Error: Debe especificar de dónde es el seguro.';
         exit;
     }
 
-    // Validación del campo "Semana de Presentación" si el instituto es COLMILAV
     if ($instituto == 'COLMILAV' && empty($semana_presentacion)) {
         echo 'Error: Debe especificar la semana de presentación.';
         exit;
     }
 
-    // Ajuste de la consulta SQL para incluir todos los campos
     $stmt = $pdo->prepare("INSERT INTO registros (instituto, ci, fecha_nacimiento, procedencia, apellido_paterno, apellido_materno, nombre, sexo, complementarios, ciudad_registro, direccion, telefono_fijo, numero_celular, correo, contacto_tutor, nombre_tutor, cuenta_con_seguro, de_donde_es_seguro, cod_amitai, pago_amitai, monto_amitai, fecha_amitai, pago_prospecto, monto_prospecto, fecha_prospecto, admin_id, fecha_creacion, semana_presentacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)");
 
     $stmt->execute([$instituto, $ci, $fecha_nacimiento, $procedencia, $apellido_paterno, $apellido_materno, $nombre, $sexo, $complementarios, $ciudad_registro, $direccion, $telefono_fijo, $numero_celular, $correo, $contacto_tutor, $nombre_tutor, $cuenta_con_seguro, $de_donde_es_seguro, $cod_amitai, $pago_amitai, $monto_amitai, $fecha_amitai, $pago_prospecto, $monto_prospecto, $fecha_prospecto, $admin_id, $semana_presentacion]);
@@ -79,7 +74,7 @@ require '../includes/header.php';
     }
 
     .flex-container > div {
-        flex: 1; /* Hace que cada campo dentro del contenedor flex ocupe el mismo ancho */
+        flex: 1;
     }
 
     .flex-container label {
@@ -88,7 +83,7 @@ require '../includes/header.php';
     }
 
     .flex-container input {
-        width: 100%; /* Asegura que los campos de entrada ocupen todo el ancho del contenedor */
+        width: 100%; 
     }
 
     select, input {
@@ -120,7 +115,7 @@ require '../includes/header.php';
         <label for="cod_amitai">Código AMITAI:</label>
         <input type="text" name="cod_amitai" id="cod_amitai" required>
 
-        <div class="flex-container"> <!-- Flex container para AMITAI -->
+        <div class="flex-container"> 
             <div>
                 <label for="pago_amitai">Nro de boleta de pago AMITAI:</label>
                 <input type="text" name="pago_amitai" id="pago_amitai" required>
@@ -135,7 +130,7 @@ require '../includes/header.php';
             </div>
         </div>
 
-        <div class="flex-container"> <!-- Flex container para Prospecto -->
+        <div class="flex-container">
             <div>
                 <label for="pago_prospecto">Nro de boleta del pago para el prospecto:</label>
                 <input type="text" name="pago_prospecto" id="pago_prospecto" required>
