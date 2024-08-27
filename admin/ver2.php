@@ -8,7 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 require '../config/db.php';
 require '../includes/header.php';
 
-// Actualizar estado, grupo y nuevos campos
 if (isset($_POST['update_estado'])) {
     $id = $_POST['id'];
     $estado = isset($_POST['estado']) ? 1 : 0;
@@ -21,11 +20,8 @@ if (isset($_POST['update_estado'])) {
     $stmt->execute([$estado, $grupo, $pago_medico, $monto_medico, $fecha_medico, $id]);
 }
 
-// Inicializar variables
 $apellido_paterno_filtrado = '';
 $registros = [];
-
-// Consultar registros por apellido paterno
 $query = "SELECT id, apellido_paterno, apellido_materno, ci, instituto, semana_presentacion, cod_amitai, direccion, estado, grupo, pago_medico, monto_medico, fecha_medico FROM registros";
 $params = [];
 if (isset($_GET['apellido_paterno']) && !empty($_GET['apellido_paterno'])) {
