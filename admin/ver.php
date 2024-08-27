@@ -8,11 +8,9 @@ if (!isset($_SESSION['user_id'])) {
 require '../config/db.php';
 require '../includes/header.php';
 
-// Obtener el id del administrador logueado
 $admin_id = $_SESSION['user_id'];
 $nivel = $_SESSION['nivel'];
 
-// Eliminar registro si se ha especificado un ID para eliminar y el usuario es el creador del registro
 if ($nivel == 'departamental' && isset($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
     $query_check_owner = "SELECT admin_id FROM registros WHERE id = ?";
@@ -29,7 +27,6 @@ if ($nivel == 'departamental' && isset($_GET['delete_id'])) {
     }
 }
 
-// Inicializar variables
 $sexo_filtrado = '';
 $instituto_filtrada = '';
 $punto_inscripcion_filtrado = '';
@@ -37,24 +34,20 @@ $apellido_paterno_filtrado = '';
 $registros = [];
 $conteos_sexo = ['Femenino' => 0, 'Masculino' => 0];
 
-// Obtener lista de institutos
 $query_institutos = "SELECT DISTINCT instituto FROM registros";
 $stmt_institutos = $pdo->prepare($query_institutos);
 $stmt_institutos->execute();
 $institutos = $stmt_institutos->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtener lista de puntos de inscripción (nombres de los administradores)
 $query_admins = "SELECT DISTINCT nombre FROM administradores";
 $stmt_admins = $pdo->prepare($query_admins);
 $stmt_admins->execute();
 $puntos_inscripcion = $stmt_admins->fetchAll(PDO::FETCH_ASSOC);
 
-// Consultar registros por filtros aplicados
 $query = "SELECT * FROM registros";
 $filters = [];
 $params = [];
 
-// Obtener el admin_id basado en el punto de inscripción seleccionado
 if (isset($_GET['punto_inscripcion']) && !empty($_GET['punto_inscripcion'])) {
     $punto_inscripcion = $_GET['punto_inscripcion'];
     $query_admin_id = "SELECT id FROM administradores WHERE nombre = ?";
@@ -98,7 +91,6 @@ $stmt = $pdo->prepare($query);
 $stmt->execute($params);
 $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Contar registros por sexo basado en los filtros aplicados
 $total_femenino = 0;
 $total_masculino = 0;
 
@@ -112,7 +104,6 @@ foreach ($registros as $registro) {
 ?>
 
 <div class="container">
-    <!-- Mostrar conteo de registros por sexo -->
     <div class="counts">
         <p><strong>Registros Femeninos:</strong> <?= $total_femenino ?> <strong> Registros Masculinos: </strong><?= $total_masculino ?></p>
     </div>
