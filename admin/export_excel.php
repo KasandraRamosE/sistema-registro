@@ -98,14 +98,11 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     ];
 }
 
-// Unir encabezado y datos
 $excel_data = array_merge($header, $data);
 
-// Crear el archivo Excel
 $xlsx = SimpleXLSXGen::fromArray($excel_data);
 $xlsx->setDefaultFont('Calibri', 11);
 
-// Descargar el archivo Excel
 $filename = "registros.xlsx";
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="' . $filename . '"');
